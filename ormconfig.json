@@ -1,0 +1,15 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "dan001",
+  "password": "xr-project_0",
+  "database": "postgresql",
+  "entities": ["dist/**/*.entity.js"],
+  "synchronize": true,
+  "logging": true,
+  "migrations": ["dist/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}
