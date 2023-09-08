@@ -4,24 +4,36 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  CreateDateColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 import { Product } from '../products/product.entity';
+
+export enum OrderStatus {
+  PENDING = 'En attente',
+  IN_PROGRESS = 'En cours',
+  COMPLETED = 'Terminé',
+}
 
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
-  userId: string;
+  @ManyToOne(() => User, (user) => user.orders)
+  user: User;
 
-  @ManyToMany(() => Product)
+  @ManyToMany(() => Product, (product) => product.orders)
   @JoinTable()
-  productList: Product[];
+  products: Product[];
 
-  @Column({ type: 'enum', enum: ['En attente', 'En cours', 'Terminé'] })
-  status: string;
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDING })
+  status: OrderStatus;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ nullable: true })
+  chosenArExperience: string; // Vous pouvez lier ceci à une table d'expériences AR si nécessaire
 }
