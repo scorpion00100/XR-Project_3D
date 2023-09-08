@@ -2,9 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrdersService {
+  createOrder(createOrderDto: CreateOrderDto) {
+      throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
