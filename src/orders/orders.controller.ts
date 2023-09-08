@@ -39,7 +39,9 @@ export class OrdersController {
       return orders;
     } catch (error) {
       // Gérez les erreurs ici, par exemple, renvoyez un code d'erreur approprié
-      throw new Error("Impossible de récupérer les commandes de l'utilisateur.");
+      throw new Error(
+        "Impossible de récupérer les commandes de l'utilisateur.",
+      );
     }
   }
 }
