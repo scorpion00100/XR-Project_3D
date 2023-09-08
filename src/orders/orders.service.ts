@@ -37,9 +37,6 @@ export class OrdersService {
   }
 
   async findOrdersByDate(date: Date): Promise<Order[]> {
-    return this.orderRepository.find({
-      where: { date },
-      order: { date: 'ASC' },
-    });
+    return this.orderRepository.find({ where: { date }, order: { date: 'ASC' } });
   }
 }
