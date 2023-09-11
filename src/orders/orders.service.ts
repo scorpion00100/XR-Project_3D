@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from './order.entity';
@@ -6,44 +10,76 @@ import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrdersService {
-  createOrder(createOrderDto: CreateOrderDto) {
-    throw new Error('Method not implemented.');
-  }
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
   ) {}
 
-  async create(orderData: Partial<Order>): Promise<Order> {
-    const order = this.orderRepository.create(orderData);
-    return this.orderRepository.save(order);
+  async create(createOrderDto: CreateOrderDto): Promise<Order> {
+    try {
+      const order = this.orderRepository.create({
+        // Mappez les propriétés de createOrderDto ici
+      });
+      return this.orderRepository.save(order);
+    } catch (error) {
+      throw new BadRequestException('Impossible de créer la commande.');
+    }
   }
 
   async findById(id: string): Promise<Order | undefined> {
-    return this.orderRepository.findOne(id);
+    try {
+      const order = await this.orderRepository.findOne({ where: { id } });
+      if (!order) {
+        throw new NotFoundException(`Commande introuvable.`);
+      }
+      return order;
+    } catch (error) {
+      throw new BadRequestException('Impossible de récupérer la commande.');
+    }
   }
 
   async findAllByUser(userId: string): Promise<Order[]> {
-    return this.orderRepository.find({ where: { userId } });
-  }
-
-  async updateStatus(orderId: string, newStatus: string): Promise<Order> {
-    const order = await this.findById(orderId);
-    if (!order) {
-      throw new NotFoundException(`Order with ID ${orderId} not found.`);
+    try {
+      return this.orderRepository.find({ where: { user: { id: userId } } });
+    } catch (error) {
+      throw new BadRequestException(
+        "Impossible de récupérer les commandes de l'utilisateur.",
+      );
     }
-    order.status = newStatus;
-    return this.orderRepository.save(order);
   }
 
-  async findOrdersByStatus(status: string): Promise<Order[]> {
-    return this.orderRepository.find({ where: { status } });
+  async updateStatus(orderId: string, newStatus: OrderStatus): Promise<Order> {
+    try {
+      const order = await this.findById(orderId);
+      order.status = newStatus;
+      return this.orderRepository.save(order);
+    } catch (error) {
+      throw new BadRequestException(
+        `Commande avec l'ID ${orderId} non trouvée.`,
+      );
+    }
+  }
+
+  async findOrdersByStatus(status: OrderStatus): Promise<Order[]> {
+    try {
+      return this.orderRepository.find({ where: { status } });
+    } catch (error) {
+      throw new BadRequestException(
+        'Impossible de récupérer les commandes par statut.',
+      );
+    }
   }
 
   async findOrdersByDate(date: Date): Promise<Order[]> {
-    return this.orderRepository.find({
-      where: { date },
-      order: { date: 'ASC' },
-    });
+    try {
+      return this.orderRepository.find({
+        where: { createdAt: date },
+        order: { createdAt: 'ASC' },
+      });
+    } catch (error) {
+      throw new BadRequestException(
+        'Impossible de récupérer les commandes par date.',
+      );
+    }
   }
 }

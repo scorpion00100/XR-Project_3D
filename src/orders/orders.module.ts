@@ -9,4 +9,4 @@ import { OrderRepository } from './order.repository';
   providers: [OrdersService],
   controllers: [OrdersController],
 })
-export class OrderModule {}
+export class OrdersModule {}

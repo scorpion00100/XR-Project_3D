@@ -10,10 +10,9 @@ export class OrdersController {
   @Post()
   async create(@Body() createOrderDto: CreateOrderDto): Promise<Order> {
     try {
-      const order = await this.ordersService.createOrder(createOrderDto);
+      const order = await this.ordersService.create(createOrderDto);
       return order;
     } catch (error) {
-      // Gérez les erreurs ici, par exemple, renvoyez un code d'erreur approprié
       throw new Error('Impossible de créer la commande.');
     }
   }
@@ -21,13 +20,12 @@ export class OrdersController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Order | undefined> {
     try {
-      const order = await this.ordersService.findOne(id);
+      const order = await this.ordersService.findById(id);
       if (!order) {
         throw new Error('Commande introuvable.');
       }
       return order;
     } catch (error) {
-      // Gérez les erreurs ici, par exemple, renvoyez un code d'erreur approprié
       throw new Error('Impossible de récupérer la commande.');
     }
   }
@@ -35,10 +33,9 @@ export class OrdersController {
   @Get('user/:userId')
   async findByUser(@Param('userId') userId: string): Promise<Order[]> {
     try {
-      const orders = await this.ordersService.findByUser(userId);
+      const orders = await this.ordersService.findAllByUser(userId);
       return orders;
     } catch (error) {
-      // Gérez les erreurs ici, par exemple, renvoyez un code d'erreur approprié
       throw new Error(
         "Impossible de récupérer les commandes de l'utilisateur.",
       );

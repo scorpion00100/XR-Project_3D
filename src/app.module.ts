@@ -19,9 +19,6 @@ import { AppService } from './app.service';
       synchronize: true,
       logging: true,
       migrations: ['dist/migrations/*.js'],
-      cli: {
-        migrationsDir: 'src/migrations',
-      },
     }),
     ProductModule,
     UsersModule,
