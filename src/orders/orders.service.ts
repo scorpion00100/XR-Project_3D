@@ -7,7 +7,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 @Injectable()
 export class OrdersService {
   createOrder(createOrderDto: CreateOrderDto) {
-      throw new Error('Method not implemented.');
+    throw new Error('Method not implemented.');
   }
   constructor(
     @InjectRepository(Order)
@@ -41,6 +41,9 @@ export class OrdersService {
   }
 
   async findOrdersByDate(date: Date): Promise<Order[]> {
-    return this.orderRepository.find({ where: { date }, order: { date: 'ASC' } });
+    return this.orderRepository.find({
+      where: { date },
+      order: { date: 'ASC' },
+    });
   }
 }

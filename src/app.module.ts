@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './products/products.module'; // Importez le module ProductsModule
 import { OrdersModule } from './orders/orders.module'; // Importez le module OrdersModule
+import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -23,6 +24,7 @@ import { AppService } from './app.service';
       },
     }),
     ProductModule,
+    UsersModule,
     OrdersModule, // Ajoutez le module OrdersModule ici
   ],
   controllers: [AppController],
