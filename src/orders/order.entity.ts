@@ -7,7 +7,7 @@ import {
   ManyToOne,
   CreateDateColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../users/user.entity';
 import { Product } from '../products/product.entity';
 
 export enum OrderStatus {
