@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToOne,
   CreateDateColumn,
+  UpdateDateColumn, // Ajout de cette ligne pour mettre à jour la date
 } from 'typeorm';
 
 import { User } from '../users/user.entity';
@@ -34,6 +35,9 @@ export class Order {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @UpdateDateColumn() // Ajout de cette ligne pour mettre à jour la date
+  updatedAt: Date; // Ajout de cette ligne pour mettre à jour la date
 
   @Column({ nullable: true })
   chosenArExperience: string; // Vous pouvez lier ceci à une table d'expériences AR si nécessaire
