@@ -28,7 +28,11 @@ export class User {
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-  // Other user properties like 'history', 'loyaltyPoints', and 'arPreferences' can be added here.
+  @Column({ default: 0 })
+  loyaltyPoints: number;
+
+  @Column({ type: 'jsonb', default: {} })
+  arPreferences: Record<string, any>;
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
