@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProductModule } from './products/products.module'; // Importez le module ProductsModule
-import { OrdersModule } from './orders/orders.module'; // Importez le module OrdersModule
+import { ProductModule } from './products/products.module';
+import { OrdersModule } from './orders/orders.module'; // Assurez-vous que le chemin est correct
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,14 +15,14 @@ import { AppService } from './app.service';
       username: 'dan001',
       password: 'xr-project_0',
       database: 'postgresql',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: ['src/**/*.entity.js'], // Chemin vers vos entités
       synchronize: true,
       logging: true,
-      migrations: ['dist/migrations/*.js'],
+      migrations: ['src/migrations/*.js'], // Chemin vers vos migrations
     }),
     ProductModule,
     UsersModule,
-    OrdersModule, // Ajoutez le module OrdersModule ici
+    OrdersModule, // Assurez-vous d'importer OrdersModule ici
   ],
   controllers: [AppController],
   providers: [AppService],

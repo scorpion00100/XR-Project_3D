@@ -5,36 +5,24 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order, OrderStatus } from './order.entity'; // Importez OrderStatus depuis votre order.entity
+import { Order, OrderStatus } from './order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { User } from '../users/user.entity'; // Importez User depuis votre user.entity
-import { Product } from '../products/product.entity'; // Importez Product depuis votre product.entity
+import { Product } from '../products/product.entity';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectRepository(Order)
     private readonly orderRepository: Repository<Order>,
-    @InjectRepository(User) // Injectez le référencement UserRepository
-    private readonly userRepository: Repository<User>,
-    @InjectRepository(Product) // Injectez le référencement ProductRepository
-    private readonly productRepository: Repository<Product>,
   ) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
     try {
-      const user = await this.userRepository.findOne({
-        where: { id: createOrderDto.userId },
-      });
-      if (!user) {
-        throw new NotFoundException(
-          `Utilisateur avec l'ID ${createOrderDto.userId} non trouvé.`,
-        );
-      }
+      const products = await this.orderRepository.manager
+        .createQueryBuilder(Product, 'product')
+        .whereInIds(createOrderDto.products)
+        .getMany();
 
-      const products = await this.productRepository.findByIds(
-        createOrderDto.products,
-      );
       if (products.length !== createOrderDto.products.length) {
         throw new NotFoundException(
           'Certains produits spécifiés ne peuvent pas être trouvés.',
@@ -42,7 +30,6 @@ export class OrdersService {
       }
 
       const order = new Order();
-      order.user = user;
       order.products = products;
       order.status = createOrderDto.status;
       order.chosenArExperience = createOrderDto.chosenArExperience;
@@ -67,7 +54,11 @@ export class OrdersService {
 
   async findAllByUser(userId: string): Promise<Order[]> {
     try {
-      return this.orderRepository.find({ where: { user: { id: userId } } });
+      return this.orderRepository
+        .createQueryBuilder('order')
+        .innerJoin('order.user', 'user')
+        .where('user.id = :userId', { userId })
+        .getMany();
     } catch (error) {
       throw new BadRequestException(
         "Impossible de récupérer les commandes de l'utilisateur.",
