@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 @Entity('products')
 export class Product {
@@ -29,4 +29,7 @@ export class Product {
 
   @Column()
   arExperienceId: string;
+
+  @ManyToOne(() => Product, (product) => product.avis)
+  product: Product;
 }
