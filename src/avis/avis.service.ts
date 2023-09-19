@@ -36,7 +36,7 @@ export class AvisService {
     if (!avis) {
       throw new NotFoundException('Avis non trouvé');
     }
-    if (avis.user.id !== userId) {
+    if (String(userId) !== avis.user.id) {
       throw new ForbiddenException(
         "Vous n'êtes pas autorisé à mettre à jour cet avis",
       );
@@ -50,7 +50,7 @@ export class AvisService {
     if (!avis) {
       throw new NotFoundException('Avis non trouvé');
     }
-    if (avis.user.id !== userId) {
+    if (String(userId) !== avis.user.id) {
       throw new ForbiddenException(
         "Vous n'êtes pas autorisé à supprimer cet avis",
       );
