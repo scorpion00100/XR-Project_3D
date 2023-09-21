@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module'; // Assurez-vous que le chemin est correct
 import { UsersModule } from './users/users.module';
+import { AvisModule } from './avis/avis.module';
+import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -23,6 +25,8 @@ import { AppService } from './app.service';
     ProductModule,
     UsersModule,
     OrdersModule, // Assurez-vous d'importer OrdersModule ici
+    AvisModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
