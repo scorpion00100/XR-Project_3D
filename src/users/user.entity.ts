@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import { Order } from '../orders/order.entity';
 import { Avis } from '../avis/avis.entity';
+import * as bcrypt from 'bcrypt'; // Importer bcrypt pour gérer le hachage du mot de passe
+
 @Entity()
 @Unique(['email'])
 export class User {
@@ -28,7 +30,7 @@ export class User {
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
-  @OneToMany(() => Avis, (avis) => avis.user) // Indiquez la relation OneToMany avec l'entité Avis
+  @OneToMany(() => Avis, (avis) => avis.user)
   avis: Avis[];
 
   @Column({ default: 0 })
@@ -39,5 +41,10 @@ export class User {
 
   constructor(partial: Partial<User>) {
     Object.assign(this, partial);
+  }
+
+  // Méthode pour comparer le mot de passe entré avec le mot de passe haché dans la base de données
+  async comparePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
   }
 }

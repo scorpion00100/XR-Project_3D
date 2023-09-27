@@ -1,6 +1,6 @@
 // auth.controller.ts
 
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service'; // Importez le service UserService
@@ -15,7 +15,7 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
-    const user = await this.userService.create(createUserDto);
+    const user = await this.userService.createUser(createUserDto);
     const token = await this.authService.createToken(user);
     return token;
   }
