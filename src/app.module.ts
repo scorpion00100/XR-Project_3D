@@ -17,10 +17,10 @@ import { AppService } from './app.service';
       username: 'dan001',
       password: 'xr-project_0',
       database: 'postgresql',
-      entities: ['src/**/*.entity.js'], // Chemin vers vos entités
+      entities: ['src/**/*.entity.ts'], // Chemin vers vos entités
       synchronize: true,
       logging: true,
-      migrations: ['src/migrations/*.js'], // Chemin vers vos migrations
+      migrations: ['src/migrations/*.ts'], // Chemin vers vos migrations
     }),
     ProductModule,
     UsersModule,

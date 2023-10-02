@@ -5,10 +5,10 @@
   "username": "dan001",
   "password": "xr-project_0",
   "database": "postgresql",
-  "entities": ["src/**/*.entity.js"],
+  "entities": ["src/**/*.entity.ts"],
   "synchronize": true,
   "logging": true,
-  "migrations": ["src/migrations/*.js"],
+  "migrations": ["src/migrations/*.ts"],
   "cli": {
     "migrationsDir": "src/migrations"
   }
