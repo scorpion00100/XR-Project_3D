@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './products/products.module';
-import { OrdersModule } from './orders/orders.module'; // Assurez-vous que le chemin est correct
+import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 import { AvisModule } from './avis/avis.module';
 import { AuthModule } from './auth/auth.module';
@@ -17,14 +17,14 @@ import { AppService } from './app.service';
       username: 'dan001',
       password: 'xr-project_0',
       database: 'postgresql',
-      entities: ['src/**/*.entity.ts'], // Chemin vers vos entités
+      entities: ['src/**/*.entity.js'], // Chemin vers vos entités
       synchronize: true,
       logging: true,
-      migrations: ['src/migrations/*.ts'], // Chemin vers vos migrations
+      migrations: ['src/migrations/*.js'], // Chemin vers vos migrations
     }),
     ProductModule,
     UsersModule,
-    OrdersModule, // Assurez-vous d'importer OrdersModule ici
+    OrdersModule,
     AvisModule,
     AuthModule,
   ],

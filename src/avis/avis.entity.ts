@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '../users/user.entity';
 import { Product } from '../products/product.entity';
 
@@ -16,12 +22,14 @@ export enum VerificationStatus {
 @Entity()
 export class Avis {
   @PrimaryGeneratedColumn()
-  id: number | string;
+  id: number;
 
   @ManyToOne(() => User, (user) => user.avis)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
   @ManyToOne(() => Product, (product) => product.avis)
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
   @Column({ type: 'smallint' })
