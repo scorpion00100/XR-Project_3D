@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class NomDeLaMigration implements MigrationInterface {
+export class Secavis implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Code SQL pour créer la table "avis" en fonction des spécifications.
     await queryRunner.query(`

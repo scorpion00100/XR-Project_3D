@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class NomDeLaMigration implements MigrationInterface {
+export class Secorder implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Code SQL pour créer la table "commandes" en fonction des spécifications.
     await queryRunner.query(`

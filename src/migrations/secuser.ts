@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Initial implements MigrationInterface {
+export class Secuser implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     // Code SQL pour créer la table "utilisateurs" en fonction des spécifications.
     await queryRunner.query(`
