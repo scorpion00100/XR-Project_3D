@@ -6,7 +6,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UsersService } from '../users/users.service'; // Importez le service UserService
 import { SignInDto } from './dto/signin.dto'; // Créez un DTO pour la connexion
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,

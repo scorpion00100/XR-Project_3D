@@ -16,7 +16,7 @@ import { AppService } from './app.service';
       port: 5432,
       username: 'dan001',
       password: 'xr-project_0',
-      database: 'postgresql',
+      database: 'savor',
       entities: ['src/**/*.entity.js'], // Chemin vers vos entités
       synchronize: true,
       logging: true,
