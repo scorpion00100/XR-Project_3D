@@ -1,10 +1,14 @@
-// auth.controller.ts
-
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { UsersService } from '../users/users.service'; // Importez le service UserService
-import { SignInDto } from './dto/signin.dto'; // Créez un DTO pour la connexion
+import { UsersService } from '../users/users.service';
+import { SignInDto } from './dto/signin.dto';
 
 @Controller('api/auth')
 export class AuthController {
@@ -15,16 +19,26 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() createUserDto: CreateUserDto): Promise<string> {
-    const user = await this.userService.createUser(createUserDto);
-    const token = await this.authService.createToken(user);
-    return token;
+    try {
+      const user = await this.userService.createUser(createUserDto);
+      const token = await this.authService.createToken(user);
+      return token;
+    } catch (error) {
+      throw new HttpException(
+        "Erreur lors de l'inscription",
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   @Post('signin')
   async signIn(@Body() signInDto: SignInDto): Promise<string> {
     const user = await this.userService.findByUsername(signInDto.username);
     if (!user || !user.comparePassword(signInDto.password)) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new HttpException(
+        'Identifiants invalides',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const token = await this.authService.createToken(user);
     return token;
