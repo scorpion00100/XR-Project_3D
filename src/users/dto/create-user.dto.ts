@@ -1,4 +1,10 @@
-import { IsString, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  MinLength,
+  IsDate,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -16,4 +22,7 @@ export class CreateUserDto {
 
   @IsString()
   role: string;
+
+  @IsDate()
+  date_naissance: Date; // Ajoutez cette ligne pour date_naissance
 }
