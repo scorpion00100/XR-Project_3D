@@ -27,6 +27,9 @@ export class User {
   @Column({ default: 'client' })
   role: string;
 
+  @Column({ nullable: true }) // Nouvelle colonne pour la date de naissance
+  date_naissance: Date | null;
+
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
