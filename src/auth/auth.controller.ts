@@ -33,13 +33,18 @@ export class AuthController {
 
   @Post('signin')
   async signIn(@Body() signInDto: SignInDto): Promise<string> {
-    const user = await this.userService.findByUsername(signInDto.username);
-    if (!user || !user.comparePassword(signInDto.password)) {
+    const user = await this.authService.validateUser(
+      signInDto.username,
+      signInDto.password,
+    );
+
+    if (!user) {
       throw new HttpException(
         'Identifiants invalides',
         HttpStatus.UNAUTHORIZED,
       );
     }
+
     const token = await this.authService.createToken(user);
     return token;
   }

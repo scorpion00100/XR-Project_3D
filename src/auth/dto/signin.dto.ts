@@ -8,4 +8,8 @@ export class SignInDto {
   @IsNotEmpty()
   @IsString()
   password: string;
+
+  @IsNotEmpty() // Ajout de la validation pour l'email
+  @IsString()
+  email: string;
 }

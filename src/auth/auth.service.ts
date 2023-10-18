@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt'; // Importation de bcrypt
 import { User } from '../users/user.entity';
 
 @Injectable()
@@ -13,14 +13,15 @@ export class AuthService {
     private readonly userRepository: Repository<User>, // Propriété du repository
   ) {}
 
-  async validateUser(username: string, password: string) {
-    // Remplacez cette logique par la validation réelle de l'utilisateur
-    const user = await this.findUserByUsername(username);
+  async validateUser(email: string, password: string) {
+    // Recherche de l'utilisateur par email
+    const user = await this.findUserByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('Utilisateur non trouvé');
     }
 
+    // Comparaison du mot de passe fourni avec le mot de passe haché enregistré
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
@@ -43,9 +44,8 @@ export class AuthService {
     return token;
   }
 
-  private async findUserByUsername(username: string): Promise<User | null> {
-    // Remplacez cette logique par la recherche réelle de l'utilisateur dans votre base de données
-    // Utilisez TypeORM pour effectuer la recherche dans la base de données.
-    return this.userRepository.findOne({ where: { username } });
+  private async findUserByEmail(email: string): Promise<User | null> {
+    // Recherche de l'utilisateur par email dans la base de données
+    return this.userRepository.findOne({ where: { email } });
   }
 }
