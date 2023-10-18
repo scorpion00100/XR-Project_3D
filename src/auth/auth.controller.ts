@@ -34,7 +34,7 @@ export class AuthController {
   @Post('signin')
   async signIn(@Body() signInDto: SignInDto): Promise<string> {
     const user = await this.authService.validateUser(
-      signInDto.email, // Utilisation de l'email
+      signInDto.email, // Utilisation de l'e-mail
       signInDto.password,
     );
 
