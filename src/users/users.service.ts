@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import * as bcrypt from 'bcrypt'; // Importer la bibliothèque de hachage bcrypt
 
 @Injectable()
 export class UsersService {
@@ -12,7 +13,15 @@ export class UsersService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
+    const { email, password } = createUserDto;
+
+    // Hasher le mot de passe avant de le stocker dans la base de données
+    const hashedPassword = await bcrypt.hash(password, 10); // Utiliser le nombre de tours de hachage souhaité
+
+    const user = this.userRepository.create({
+      email,
+      password: hashedPassword,
+    });
     return await this.userRepository.save(user);
   }
 
