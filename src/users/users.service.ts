@@ -16,16 +16,15 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async findUserById(id: string): Promise<User> {
-    const user = await this.userRepository.findOne({ where: { id } });
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-    return user;
-  }
+  async findByEmail(email: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({ where: { email } });
 
-  async findByUsername(username: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({ where: { username } });
+    if (!user) {
+      // Si l'utilisateur n'est pas trouvé, lancez une NotFoundException
+      throw new NotFoundException('Utilisateur non trouvé');
+    }
+
+    return user;
   }
 
   async getAllUsers(): Promise<User[]> {

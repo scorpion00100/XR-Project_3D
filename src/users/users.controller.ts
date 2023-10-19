@@ -11,9 +11,9 @@ export class UsersController {
     return await this.usersService.createUser(createUserDto);
   }
 
-  @Get(':id')
-  async getUserById(@Param('id') id: string) {
-    return await this.usersService.findUserById(id);
+  @Get('email/:email')
+  async getUserByEmail(@Param('email') email: string) {
+    return await this.usersService.findByEmail(email);
   }
 
   @Get()
