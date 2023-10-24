@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Table } from './table.entity';
@@ -15,8 +15,18 @@ export class TableService {
     return this.tableRepository.find();
   }
 
-  getTableById(id: string) {
-    return this.tableRepository.findOne(id);
+  async getTableById(id: string): Promise<Table | undefined> {
+    try {
+      return await this.tableRepository.findOne({ where: { id } });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        // Gérer l'erreur de non-existence de l'entité
+        return undefined;
+      } else {
+        // Gérer d'autres erreurs ici
+        throw error;
+      }
+    }
   }
 
   createTable(createTableDto: CreateTableDto) {

@@ -8,7 +8,7 @@ export class InvoiceController {
   constructor(private readonly invoiceService: InvoiceService) {}
 
   @Get(':id')
-  async getInvoiceById(@Param('id') id: string): Promise<Invoice> {
+  async getInvoiceById(@Param('id') id: number): Promise<Invoice> {
     return this.invoiceService.getInvoiceById(id);
   }
 

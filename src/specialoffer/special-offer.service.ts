@@ -18,7 +18,9 @@ export class SpecialOfferService {
   async createSpecialOffer(
     createSpecialOfferDto: CreateSpecialOfferDto,
   ): Promise<SpecialOffer> {
-    const specialOffer = this.specialOfferRepository.create(createSpecialOfferDto);
+    const specialOffer = this.specialOfferRepository.create(
+      createSpecialOfferDto,
+    );
     return this.specialOfferRepository.save(specialOffer);
   }
 }

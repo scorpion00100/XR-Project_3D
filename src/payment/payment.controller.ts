@@ -1,5 +1,5 @@
 // payment.controller.ts
-import { Controller, Post, Body } from '@nestjs/common';
+/*import { Controller, Post, Body } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/payment.dto';
 
@@ -17,3 +17,4 @@ export class PaymentController {
     return payment;
   }
 }
+*/
