@@ -20,6 +20,7 @@ export enum OrderStatus {
 
 @Entity()
 export class Order {
+  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
